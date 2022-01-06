@@ -3,29 +3,21 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-name: $(BuildDefinitionName)_$(date:yyyyMMdd)$(rev:.r)
+
 
 trigger: none
-
-pr: none
-
-stages :        
-  - stage: arm_template_deploy
-    jobs:
-      - job: arm_template_deploy
-        steps:
-              - checkout: self
-
-              - task: AzureResourceManagerTemplateDeployment@3
-                inputs:
-                  deploymentScope: 'Resource Group'
-                  azureResourceManagerConnection: 'ARMTemplateConnection'
-                  subscriptionId: '28b2a0e6-67a2-44e3-9705-dea6aaba40f4'
-                  action: 'Create Or Update Resource Group'
-                  resourceGroupName: 'PipeTest_RG'
-                  location: 'eastus'
-                  templateLocation: 'Linked artifact'
-                  csmFile: 'https://dev.azure.com/XgilityOrganization/_git/TestProject?path=/vnet.json'
-                  csmParametersFile: 'https://dev.azure.com/XgilityOrganization/_git/TestProject?path=/vnet_parameters.json'
-                  deploymentMode: 'Incremental'
+steps:
+  - 
+- task: "AzureResourceManagerTemplateDeployment@3"
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'ARMTemplateConnection'
+    subscriptionId: '28b2a0e6-67a2-44e3-9705-dea6aaba40f4'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'PipeTest_RG'
+    location: 'East US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://dev.azure.com/XgilityOrganization/_git/TestProject?path=/vnet.json'
+    csmParametersFileLink: 'https://dev.azure.com/XgilityOrganization/_git/TestProject?path=/vnet_parameters.json'
+    deploymentMode: 'Incremental'
 
