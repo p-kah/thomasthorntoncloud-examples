@@ -19,7 +19,7 @@ stages :
               - task: AzureResourceManagerTemplateDeployment@3
                 inputs:
                   deploymentScope: 'Resource Group'
-                  azureResourceManagerConnection: 'ResourceManagerConnection'
+                  azureResourceManagerConnection: 'p-kah'
                   subscriptionId: '28b2a0e6-67a2-44e3-9705-dea6aaba40f4'
                   action: 'Create Or Update Resource Group'
                   resourceGroupName: 'PipeTest_RG'
