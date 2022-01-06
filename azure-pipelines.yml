@@ -1,0 +1,31 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name: $(BuildDefinitionName)_$(date:yyyyMMdd)$(rev:.r)
+
+trigger: none
+
+pr: none
+
+stages :        
+  - stage: arm_template_deploy
+    jobs:
+      - job: arm_template_deploy
+        steps:
+              - checkout: self
+
+              - task: AzureResourceManagerTemplateDeployment@3
+                inputs:
+                  deploymentScope: 'Resource Group'
+                  azureResourceManagerConnection: 'ResourceManagerConnection'
+                  subscriptionId: '28b2a0e6-67a2-44e3-9705-dea6aaba40f4'
+                  action: 'Create Or Update Resource Group'
+                  resourceGroupName: 'PipeTest_RG'
+                  location: 'eastus'
+                  templateLocation: 'Linked artifact'
+                  csmFile: '$(System.DefaultWorkingDirectory)/template/vnet.json'
+                  csmParametersFile: '$(System.DefaultWorkingDirectory)/template/vnet.parameters.json'
+                  deploymentMode: 'Incremental'
+
