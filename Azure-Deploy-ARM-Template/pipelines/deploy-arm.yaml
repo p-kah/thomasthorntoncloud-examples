@@ -14,12 +14,14 @@ stages :
               - task: AzureResourceManagerTemplateDeployment@3
                 inputs:
                   deploymentScope: 'Resource Group'
-                  azureResourceManagerConnection: 'tamopsarm'
-                  subscriptionId: 'Your-Subscription-ID'
+                  azureResourceManagerConnection: 'ResourceManagerConnection'
+                  subscriptionId: '28b2a0e6-67a2-44e3-9705-dea6aaba40f4'
+'
                   action: 'Create Or Update Resource Group'
-                  resourceGroupName: 'tamops-arm-template'
-                  location: 'eastus2'
-                  templateLocation: 'Linked artifact'
+                  resourceGroupName: 'PipeTest_RG'
+                  location: 'eastus'
+                  templateLocation: 'https://raw.githubusercontent.com/thomast1906/thomasthorntoncloud-examples/master/Azure-Deploy-ARM-Template/pipelines/deploy-arm.yaml'
                   csmFile: '$(System.DefaultWorkingDirectory)/template/vnet.json'
                   csmParametersFile: '$(System.DefaultWorkingDirectory)/template/vnet.parameters.json'
                   deploymentMode: 'Incremental'
+
